@@ -32,7 +32,21 @@ namespace GameServerApplication
 			client.NoDelay = false;
             
 			ServerSocket.BeginAcceptTcpClient(OnClientConnect, null);
-				
+
+            for (int i = 0; i < MaximumClientConnections; i++)
+			{
+                if (Clients[i].Socket == null)
+				{
+					Clients[i].Socket = client;
+					Clients[i].Index = i;
+					Clients[i].IP = client.Client.RemoteEndPoint.ToString();
+					Clients[i].Start();
+					Console.WriteLine("Incoming connection from " + Clients[i].IP + " Index is: " + i);
+
+					//todo Send Welcome message to client
+					return;
+				}
+			}
 		}
 
     }

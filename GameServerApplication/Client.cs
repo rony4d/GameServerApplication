@@ -10,11 +10,11 @@ namespace GameServerApplication
 		public TcpClient Socket; // where to send the packets
 		public NetworkStream mystream; // network to carry the packets
 		byte[] readBuffer;
-
+		const int BufferSize = 4096;
 		public void Start()
         {
-			Socket.SendBufferSize = 4096;
-			Socket.ReceiveBufferSize = 4096;
+			Socket.SendBufferSize = BufferSize;
+			Socket.ReceiveBufferSize = BufferSize;
 			mystream = Socket.GetStream(); // get all the data
 			Array.Resize(ref readBuffer, Socket.ReceiveBufferSize);
 			mystream.BeginRead(readBuffer, 0, Socket.ReceiveBufferSize, OnReceiveData, null);
