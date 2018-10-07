@@ -12,7 +12,9 @@ namespace GameServerApplication
         {
 			threadConsole = new Thread(new ThreadStart(ConsoleThread));
 			threadConsole.Start();
-			Network.instance.ServerStart();
+			Database.instance.CheckPath(Database.instance.PATH_ACCOUNT);
+            ServerHandleData.instance.InitMessages();
+            Network.instance.ServerStart();
         }
 
 		static void ConsoleThread()

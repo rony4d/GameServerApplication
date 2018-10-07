@@ -12,13 +12,14 @@ namespace GameServerApplication
 		public static Network instance = new Network(); //singleton pattern
 
 		public static Client[] Clients = new Client[MaximumClientConnections];
-
+		public static Player[] Player = new Player[MaximumClientConnections];
 		public void ServerStart()
 		{
 			//assign default clients to client array before server starts to prevent null exception
             for (int i = 0; i < MaximumClientConnections; i++)
 			{
 				Clients[i] = new Client();
+				Player[i] = new Player();
 			}
 			ServerSocket = new TcpListener(IPAddress.Any,DefaultPort );
 			ServerSocket.Start();
@@ -41,7 +42,7 @@ namespace GameServerApplication
 					Clients[i].Index = i;
 					Clients[i].IP = client.Client.RemoteEndPoint.ToString();
 					Clients[i].Start();
-					Console.WriteLine("Incoming connection from " + Clients[i].IP + " Index is: " + i);
+					Console.WriteLine("Incoming connection from " + Clients[i].IP + " Index is: " + i + 1);
 
 					//todo Send Welcome message to client
 					return;
