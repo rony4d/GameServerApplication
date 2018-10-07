@@ -39,12 +39,45 @@ namespace GameServerApplication
 
 		void HandleLogin(int index, byte[] data)
         {
-            throw new NotImplementedException();
-        }
+			ByteBuffer buffer = new ByteBuffer();
+            buffer.WriteBytes(data);
+            int packet = buffer.ReadInteger();
+            string username = buffer.ReadString();
+            string password = buffer.ReadString();
 
+            if (Database.instance.AccountExist(username) == false)
+            {
+                //SendAlertMsg user does not exist
+                return;
+            }
+
+            if (Database.instance.PasswordOK(username, password) == false)
+            {
+                //SendAlertMsg password does not match
+                return;
+            }
+            Database.instance.LoadPlayer(index, username);
+			ServerSendData.instance.SendInGame(index);
+        }
+        
         void HandleNewAccount(int index, byte[] data)
         {
-            throw new NotImplementedException();
+			ByteBuffer buffer = new ByteBuffer();
+            buffer.WriteBytes(data);
+            int packet = buffer.ReadInteger();
+            string username = buffer.ReadString();
+            string password = buffer.ReadString();
+
+            if (Database.instance.AccountExist(username) == true)
+            {
+                //SendAlertMsg
+                return;
+            }
+
+
+            Database.instance.AddAccount(index, username, password);
+
+			ServerSendData.instance.SendInGame(index);
         }
 
     }

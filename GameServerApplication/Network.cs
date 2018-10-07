@@ -36,13 +36,15 @@ namespace GameServerApplication
 
             for (int i = 0; i < MaximumClientConnections; i++)
 			{
+				int playerIndex = i + 1; // to prevent having a zero value
+
                 if (Clients[i].Socket == null)
 				{
 					Clients[i].Socket = client;
 					Clients[i].Index = i;
 					Clients[i].IP = client.Client.RemoteEndPoint.ToString();
 					Clients[i].Start();
-					Console.WriteLine("Incoming connection from " + Clients[i].IP + " Index is: " + i + 1);
+					Console.WriteLine("Incoming connection from " + Clients[i].IP + " Index is: " + playerIndex);
 
 					//todo Send Welcome message to client
 					return;

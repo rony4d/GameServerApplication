@@ -28,7 +28,7 @@ namespace GameServerApplication
         #region"Accounts"
         public bool PasswordOK(string name, string password)
         {
-            System.IO.Stream stream = File.Open(PATH_DATA + PATH_ACCOUNT + "/" + name + FILE_EXTENSION, FileMode.Open);
+            Stream stream = File.Open(PATH_DATA + PATH_ACCOUNT + "/" + name + FILE_EXTENSION, FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
             var player = (Player)bf.Deserialize(stream);
 
